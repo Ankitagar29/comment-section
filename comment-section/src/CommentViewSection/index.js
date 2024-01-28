@@ -88,7 +88,6 @@ const CommentViewSection=({commentData,setCommentData})=>{
   
 return(
     <div>
-        <div onClick={()=>handleSort()}>Sort By:Date and Time </div>
         {commentData.map((item)=>{
         const{ name='',comment='',id='',time='',comments=[]}=item || {}
         return(
