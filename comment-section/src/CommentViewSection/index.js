@@ -36,6 +36,7 @@ const CommentViewSection=({commentData,setCommentData})=>{
     const handleEdit=(item)=>{
         setCommentId('');
         setEdit(false);
+        setReply(false)
         const {id='',comment=''}=item ||{};
         setEdit(true)
         setCommentId(id)
@@ -44,6 +45,7 @@ const CommentViewSection=({commentData,setCommentData})=>{
     const handleReply=(item)=>{
         setReplyId('');
         setReply(false);
+        setEdit(false);
         const {id=''}=item ||{};
         setReply(true)
         setReplyId(id)
@@ -74,10 +76,19 @@ const CommentViewSection=({commentData,setCommentData})=>{
         }
         
     }
-  console.log(commentData,"comment")  
+    const handleSort=()=>{
+       
+        commentData.forEach((item) => {
+            item.time = new Date(item.time);
+        });
+        commentData.sort((a, b) => a.time - b.time);
+
+       setCommentData(commentData)
+    }
+  
 return(
     <div>
-        
+        <div onClick={()=>handleSort()}>Sort By:Date and Time </div>
         {commentData.map((item)=>{
         const{ name='',comment='',id='',time='',comments=[]}=item || {}
         return(
@@ -104,20 +115,27 @@ return(
               </div>
              {(replyId===id && reply)? <ReplyComment  setCommentData={setCommentData} commentData={commentData} replyId={replyId} setReply={setReply} setReplyId={setReplyId}/>:null}
              {(comments|| []).map((item)=>{
-                console.log(item,"itme")
-                const { time='',name='',comment=''}=item || {}
-                return (
-                    <div className="reply_section_comment">
-
-                        <div className="comment_header">
-                            <div> {name}</div>
-                            <div>{formatDate(time)}</div>
+                if(item){
+                    const { time='',name='',comment=''}=item || {}
+                    
+                    return (
+                        <div className="reply_section_comment">
+    
+                            <div className="comment_header">
+                                <div> {name}</div>
+                                <div>{formatDate(time)}</div>
+                            </div>
+                            <div>
+                                {comment}
+                            </div>
                         </div>
-                        <div>
-                            {comment}
-                        </div>
-                    </div>
-                )
+                    )
+                }
+                else
+                {
+                    return  null;
+                }
+                
              })}
             </div>
 

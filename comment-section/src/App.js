@@ -9,6 +9,7 @@ function App() {
 
   });
   const[commentData,setCommentData]=useState([]);
+  
   useEffect(()=>{
     const commentData=localStorage.getItem('comments')
     
@@ -16,10 +17,7 @@ function App() {
       if(commentData){
         setCommentData(()=>[
         ...JSON.parse(localStorage.getItem('comments'))])
-      }
-      
-    
-    
+      }    
   },[])
   return (
     <div className="App">

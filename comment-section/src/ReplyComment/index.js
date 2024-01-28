@@ -1,6 +1,7 @@
 import './styles.css';
 import { useState} from 'react';
 const ReplyComment=({setCommentData,commentData,replyId,setReplyId,setReply})=>{
+
   const[replyComment,setReplyComment]=useState()
     const handleInputChange=(event)=>{
       const { name, value } = event.target;
@@ -14,19 +15,23 @@ const ReplyComment=({setCommentData,commentData,replyId,setReplyId,setReply})=>{
       const { name='',comment=''}=replyComment || {};
       
       if(name.trim()&& comment.trim()){
-        setCommentData((pev)=>[...pev.map((element)=>{   
+        setCommentData((pev)=>[...pev.map((element)=>{  
+           
           if(element?.id===replyId){
               return{
                   ...element,
-                  comments:[
-                    ...element.comments,
-                    {
-                    time:new Date(),
-                    name:name,
-                    comment:comment
-                  }
+                //   comments:[
+                //     element?.comments===undefined ? element?.comments:undefined,
+                //     {
+                    
+                //   }
                 
-                ]
+                // ]
+                comments:element.comments!==undefined?[...element.comments,{time:new Date(),
+                  name:name,
+                  comment:comment}]:[{time:new Date(),
+                    name:name,
+                    comment:comment}]
                 }
                   
         }
@@ -36,6 +41,7 @@ const ReplyComment=({setCommentData,commentData,replyId,setReplyId,setReply})=>{
           }})])
           setReplyId('');
           setReply(false)
+          localStorage.setItem('comments',JSON.stringify(commentData) );
           
       }
       else{

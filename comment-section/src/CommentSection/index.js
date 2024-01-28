@@ -45,6 +45,7 @@ const CommentSection=({comment,setComment,commentData,setCommentData})=>{
             <div className="button_container">
                 <button className='post_button' onClick={()=>handleClick()}>POST</button>
             </div>
+            
             </form>
         </div>
     )
